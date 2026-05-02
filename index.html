@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 Tặng Bạn Miễn Phí – Phương Pháp Tạo Landing Page Trên GitHub Pages</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #D4A843;
+    --gold-light: #F0CB6E;
+    --gold-dark: #A67B2A;
+    --dark: #0D0D0D;
+    --dark2: #161616;
+    --dark3: #1E1E1E;
+    --text: #F5F0E8;
+    --muted: #9A9080;
+    --accent: #E8563A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,168,67,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(232,86,58,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 40px;
+    text-align: center;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(212,168,67,0.4);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    animation: fadeDown 0.8s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+
+  /* GIFT BOX */
+  .gift-visual {
+    position: relative;
+    margin-bottom: 56px;
+    animation: fadeDown 0.8s 0.15s ease both;
+  }
+
+  .gift-box {
+    width: 120px; height: 120px;
+    margin: 0 auto;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .gift-box svg { width: 100%; height: 100%; filter: drop-shadow(0 0 30px rgba(212,168,67,0.35)); }
+
+  .glow-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,168,67,0.15);
+    animation: ringPulse 2.5s ease-in-out infinite;
+  }
+  .glow-ring:nth-child(2) { width: 200px; height: 200px; animation-delay: 0.5s; }
+
+  @keyframes ringPulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.1; transform: translate(-50%, -50%) scale(1.08); }
+  }
+
+  /* BENEFITS */
+  .benefits {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 56px;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+
+  .benefit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .benefit span { color: var(--gold); font-size: 15px; }
+
+  /* FORM */
+  .form-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    animation: fadeUp 0.9s 0.4s ease both;
+  }
+
+  .form-card {
+    background: var(--dark2);
+    border: 1px solid rgba(212,168,67,0.2);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .form-sub {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"] {
+    width: 100%;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input::placeholder { color: rgba(154,144,128,0.5); }
+
+  input:focus {
+    border-color: rgba(212,168,67,0.5);
+    box-shadow: 0 0 0 3px rgba(212,168,67,0.08);
+  }
+
+  .optional {
+    font-size: 10px;
+    color: rgba(154,144,128,0.6);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: 4px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: none;
+    border-radius: 10px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0D0D0D;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,168,67,0.3); }
+  .btn:hover::before { opacity: 1; }
+  .btn:active { transform: translateY(0); }
+
+  .privacy {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(154,144,128,0.5);
+    margin-top: 14px;
+  }
+
+  /* SUCCESS */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .success-icon {
+    font-size: 52px;
+    margin-bottom: 16px;
+    animation: bounceIn 0.5s ease;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .success-screen h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--gold);
+  }
+
+  .success-screen p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .zalo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0068FF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 28px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    animation: pulse-btn 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,104,255,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(0,104,255,0); }
+  }
+
+  .zalo-btn:hover { transform: translateY(-2px); }
+
+  /* WHAT YOU GET */
+  .section {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.2;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .feature {
+    background: var(--dark2);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .feature:hover {
+    border-color: rgba(212,168,67,0.25);
+    transform: translateY(-3px);
+  }
+
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .feature h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .feature p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* DIVIDER */
+  .divider {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .divider span {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+    color: rgba(154,144,128,0.4);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* COUNTDOWN */
+  .countdown-bar {
+    background: rgba(212,168,67,0.08);
+    border: 0.5px solid rgba(212,168,67,0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .countdown-bar strong { font-weight: 600; }
+
+  @media (max-width: 480px) {
+    .form-card { padding: 28px 20px; }
+    .benefits { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="tag">Quà tặng miễn phí · Giới hạn</div>
+
+  <div class="gift-visual">
+    <div class="glow-ring"></div>
+    <div class="glow-ring"></div>
+    <div class="gift-box">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="15" y="50" width="90" height="60" rx="6" fill="#1E1E1E" stroke="#D4A843" stroke-width="1.5"/>
+        <rect x="10" y="38" width="100" height="18" rx="5" fill="#2A2A2A" stroke="#D4A843" stroke-width="1.5"/>
+        <rect x="52" y="38" width="16" height="72" fill="#D4A843" opacity="0.7"/>
+        <path d="M60 38 C60 38 40 28 38 18 C36 10 44 8 52 18 C56 24 60 38 60 38Z" fill="#D4A843"/>
+        <path d="M60 38 C60 38 80 28 82 18 C84 10 76 8 68 18 C64 24 60 38 60 38Z" fill="#F0CB6E"/>
+        <circle cx="60" cy="38" r="5" fill="#D4A843"/>
+      </svg>
+    </div>
+  </div>
+
+  <h1>Nhận ngay <em>phương pháp</em><br>tạo Landing Page miễn phí</h1>
+  <p class="subtitle">Tài liệu hướng dẫn tạo trang bán hàng chuyên nghiệp trên GitHub Pages — hoàn toàn miễn phí, không cần hosting, không cần code phức tạp.</p>
+
+  <div class="benefits">
+    <div class="benefit"><span>✓</span> Hoàn toàn miễn phí</div>
+    <div class="benefit"><span>✓</span> Không cần hosting</div>
+    <div class="benefit"><span>✓</span> Giao hàng tức thì</div>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="form-card">
+
+      <div class="countdown-bar">
+        🔥 Đã có <strong id="count">247</strong> người nhận quà hôm nay
+      </div>
+
+      <!-- FORM -->
+      <div id="formSection">
+        <p class="form-title">Điền thông tin để nhận quà</p>
+        <p class="form-sub">Quà sẽ được gửi ngay vào email của bạn</p>
+
+        <form id="giftForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="field">
+            <label>Họ và tên <span style="color:var(--accent)">*</span></label>
+            <input type="text" name="name" placeholder="Nguyễn Văn A" required>
+          </div>
+
+          <div class="field">
+            <label>Email <span style="color:var(--accent)">*</span></label>
+            <input type="email" name="email" placeholder="email@gmail.com" required>
+          </div>
+
+          <div class="field">
+            <label>Số điện thoại <span class="optional">(không bắt buộc)</span></label>
+            <input type="tel" name="phone" placeholder="0912 345 678">
+          </div>
+
+          <!-- Hidden fields -->
+          <input type="hidden" name="_subject" value="🎁 Có người đăng ký nhận quà mới!">
+          <input type="hidden" name="_next" value="">
+
+          <button type="submit" class="btn">🎁 Nhận quà miễn phí ngay</button>
+        </form>
+
+        <p class="privacy">🔒 Thông tin của bạn được bảo mật tuyệt đối. Không spam.</p>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-screen" id="successSection">
+        <div class="success-icon">🎉</div>
+        <h3>Chúc mừng bạn!</h3>
+        <p>Quà tặng đã được gửi vào email của bạn.<br>Bấm vào đây để vào nhóm Zalo nhận tài liệu ngay!</p>
+        <a href="https://zalo.me/g/lflsmb016" target="_blank" class="zalo-btn">
+          <svg width="20" height="20" viewBox="0 0 32 32" fill="white"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm6.5 19.5h-2l-3-5v5h-2v-8h2l3 5v-5h2v8zm-9 0h-2v-8h2v8zm-4 0H7v-8h2v6h2.5v2z"/></svg>
+          Vào nhóm Zalo nhận tài liệu
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider"><span>Bạn sẽ nhận được gì</span></div>
+
+<!-- FEATURES -->
+<section class="section">
+  <p class="section-label">Nội dung quà tặng</p>
+  <h2>Tất cả những gì bạn cần để bắt đầu</h2>
+
+  <div class="features">
+    <div class="feature">
+      <span class="feature-icon">📄</span>
+      <h3>Hướng dẫn từng bước</h3>
+      <p>Tạo landing page từ A–Z trên GitHub Pages, không cần kinh nghiệm lập trình.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🎨</span>
+      <h3>Template HTML sẵn dùng</h3>
+      <p>File HTML đẹp, chuyên nghiệp — chỉ cần thay nội dung và upload lên GitHub.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">📧</span>
+      <h3>Thiết lập thu thập email</h3>
+      <p>Hướng dẫn kết nối Formspree để nhận thông báo mỗi khi có khách đăng ký.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🚀</span>
+      <h3>Deploy lên GitHub Pages</h3>
+      <p>Hướng dẫn chi tiết đưa trang lên internet miễn phí trong vòng 5 phút.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 · Làm với ❤️ · Hoàn toàn miễn phí, không điều kiện</p>
+</footer>
+
+<script>
+  // Fake counter animation
+  let base = 247;
+  setInterval(() => {
+    if (Math.random() > 0.7) {
+      base += Math.floor(Math.random() * 2) + 1;
+      document.getElementById('count').textContent = base;
+    }
+  }, 8000);
+
+  // Form submit
+  const form = document.getElementById('giftForm');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.btn');
+    btn.textContent = 'Đang gửi...';
+    btn.disabled = true;
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        document.getElementById('formSection').style.display = 'none';
+        document.getElementById('successSection').style.display = 'block';
+        // Auto redirect after 3 seconds
+        setTimeout(() => {
+          window.open('https://zalo.me/g/lflsmb016', '_blank');
+        }, 3000);
+      } else {
+        btn.textContent = '❌ Có lỗi, thử lại nhé!';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = '❌ Có lỗi, thử lại nhé!';
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
